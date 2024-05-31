@@ -114,3 +114,4 @@ if __name__ == "__main__":
     # print number of files
     print(f"Number of files: {len(os.listdir('/tmp/issue450/'))}")
     process_files()
+
