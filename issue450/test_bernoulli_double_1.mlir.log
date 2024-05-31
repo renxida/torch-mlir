@@ -1,0 +1,8 @@
+within split at ./issue450/test_bernoulli_double_1.mlir.decomposed.mlir:1 offset :12:10: error: unimplemented: lhs and rhs dtype must be same
+    %3 = torch.aten.lt.Tensor %2, %arg0 : !torch.vtensor<[10],f64>, !torch.vtensor<[10],f32> -> !torch.vtensor<[10],i1>
+         ^
+within split at ./issue450/test_bernoulli_double_1.mlir.decomposed.mlir:1 offset :12:10: note: see current operation: %35 = "torch.aten.lt.Tensor"(%27, %arg0) : (!torch.vtensor<[10],f64>, !torch.vtensor<[10],f32>) -> !torch.vtensor<[10],i1>
+within split at ./issue450/test_bernoulli_double_1.mlir.decomposed.mlir:1 offset :12:10: error: failed to legalize operation 'torch.aten.lt.Tensor' that was explicitly marked illegal
+    %3 = torch.aten.lt.Tensor %2, %arg0 : !torch.vtensor<[10],f64>, !torch.vtensor<[10],f32> -> !torch.vtensor<[10],i1>
+         ^
+within split at ./issue450/test_bernoulli_double_1.mlir.decomposed.mlir:1 offset :12:10: note: see current operation: %28 = "torch.aten.lt.Tensor"(%27, %arg0) : (!torch.vtensor<[10],f64>, !torch.vtensor<[10],f32>) -> !torch.vtensor<[10],i1>

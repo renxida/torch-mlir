@@ -1,0 +1,4 @@
+within split at ./issue450/test_einsum_batch_matmul_1.mlir.decomposed.mlir:1 offset :9:10: error: failed to legalize operation 'torch.aten.permute' that was explicitly marked illegal
+    %1 = torch.aten.permute %arg0, %0 : !torch.vtensor<[5,2,3],f64>, !torch.list<int> -> !torch.vtensor<*,f64>
+         ^
+within split at ./issue450/test_einsum_batch_matmul_1.mlir.decomposed.mlir:1 offset :9:10: note: see current operation: %6 = "torch.aten.permute"(%arg0, %5) : (!torch.vtensor<[5,2,3],f64>, !torch.list<int>) -> !torch.vtensor<*,f64>

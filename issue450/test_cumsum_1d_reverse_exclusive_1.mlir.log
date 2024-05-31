@@ -1,0 +1,4 @@
+within split at ./issue450/test_cumsum_1d_reverse_exclusive_1.mlir.decomposed.mlir:1 offset :13:10: error: failed to legalize operation 'torch.aten.cumsum' that was explicitly marked illegal
+    %7 = torch.aten.cumsum %6, %4, %none : !torch.vtensor<[5],f64>, !torch.int, !torch.none -> !torch.vtensor<[5],f64>
+         ^
+within split at ./issue450/test_cumsum_1d_reverse_exclusive_1.mlir.decomposed.mlir:1 offset :13:10: note: see current operation: %10 = "torch.aten.cumsum"(%9, %7, %0) : (!torch.vtensor<[5],f64>, !torch.int, !torch.none) -> !torch.vtensor<[5],f64>

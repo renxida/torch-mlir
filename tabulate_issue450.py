@@ -13,12 +13,11 @@ def extract_function_name(code):
 def split_files():
     base_dir = "test/Conversion/TorchOnnxToTorch/"
     file_names = ["simple_ops_a_to_f.mlir", "simple_ops_g_to_p.mlir", "simple_ops_q_to_z.mlir"]
-    output_dir = "/tmp/issue450/"
+    output_dir = "./issue450/"
     os.makedirs(output_dir, exist_ok=True)
     separator = "// -----"
     func_name_counts = defaultdict(int)
     for file_name in file_names:
-        print(f"Processing file: {file_name}")
         file_path = os.path.join(base_dir, file_name)
         with open(file_path, 'r') as file:
             content = file.read()
@@ -35,7 +34,7 @@ def split_files():
             with open(part_file_path, 'w') as part_file:
                 part_file.write(part)
 def process_files():
-    output_dir = "/tmp/issue450/"
+    output_dir = "./issue450/"
     results = {"success": 0, "failure": 0, "errors": defaultdict(int), "testcases_with_error": defaultdict(list)}
     
     stages = {
@@ -72,14 +71,12 @@ def process_files():
                     error_message = check_error(log_file_path, proc.returncode)
                     results["errors"][error_message] += 1
                     results["testcases_with_error"][error_message].append(funcname)
-                    print(error_message)
                     break
                 
                 input_file_path = output_file_path
             
             else:
                 results["success"] += 1
-                print(f"{file_name} processed successfully.")
     # summarize results
     print("\n\nSummary:")
     print(f"Success: {results['success']}")
@@ -118,5 +115,5 @@ def check_error(log_file_path, returncode):
 if __name__ == "__main__":
     split_files()
     # print number of files
-    print(f"Number of files: {len(os.listdir('/tmp/issue450/'))}")
+    print(f"Number of files: {len(os.listdir('./issue450/'))}")
     process_files()

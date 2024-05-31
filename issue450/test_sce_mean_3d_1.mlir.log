@@ -1,0 +1,2 @@
+<unknown>:0: error: failed to legalize operation 'torch.constant.float'
+<unknown>:0: note: see current operation: %0 = "torch.constant.float"() <{value = 0.000000e+00 : f64}> : () -> !torch.float

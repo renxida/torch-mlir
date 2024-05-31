@@ -1,0 +1,37 @@
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace.
+Stack dump:
+0.	Program arguments: torch-mlir-opt --split-input-file --torch-backend-to-linalg-on-tensors-backend-pipeline --canonicalize -o ./issue450/test_logsoftmax_old_axis_1_dynamic_dim_1.mlir.linalg.mlir ./issue450/test_logsoftmax_old_axis_1_dynamic_dim_1.mlir.decomposed.mlir
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+0  torch-mlir-opt 0x00005a40d03b0bd8
+1  torch-mlir-opt 0x00005a40d03ae75e
+2  torch-mlir-opt 0x00005a40d03b1268
+3  libc.so.6      0x00007906879b5520
+4  torch-mlir-opt 0x00005a40cf121b03
+5  torch-mlir-opt 0x00005a40cf11f076
+6  torch-mlir-opt 0x00005a40cf11e140
+7  torch-mlir-opt 0x00005a40cfe16621
+8  torch-mlir-opt 0x00005a40cfe4ff9a
+9  torch-mlir-opt 0x00005a40cfe4cb9f
+10 torch-mlir-opt 0x00005a40cfe173e7
+11 torch-mlir-opt 0x00005a40cfe166b7
+12 torch-mlir-opt 0x00005a40cfe17840
+13 torch-mlir-opt 0x00005a40cfe1e4bb
+14 torch-mlir-opt 0x00005a40cf0c5e20
+15 torch-mlir-opt 0x00005a40cfea3b4f
+16 torch-mlir-opt 0x00005a40cfea41b2
+17 torch-mlir-opt 0x00005a40cfea98ae
+18 torch-mlir-opt 0x00005a40cfea58bb
+19 torch-mlir-opt 0x00005a40cfea3c93
+20 torch-mlir-opt 0x00005a40cfea41b2
+21 torch-mlir-opt 0x00005a40cfea67d2
+22 torch-mlir-opt 0x00005a40ceb9e172
+23 torch-mlir-opt 0x00005a40ceb9dddb
+24 torch-mlir-opt 0x00005a40d034d386
+25 torch-mlir-opt 0x00005a40d034d00d
+26 torch-mlir-opt 0x00005a40ceb96ded
+27 torch-mlir-opt 0x00005a40ceb9708c
+28 torch-mlir-opt 0x00005a40ceb972a2
+29 torch-mlir-opt 0x00005a40ceb9576e
+30 libc.so.6      0x000079068799cd90
+31 libc.so.6      0x000079068799ce40 __libc_start_main + 128
+32 torch-mlir-opt 0x00005a40ceb95425

@@ -1,0 +1,8 @@
+within split at ./issue450/test_qlinearconv_bias_1.mlir.decomposed.mlir:1 offset :19:11: error: 'linalg.generic' op inferred input/output operand #1 has shape's dimension #1 to be 7, but found 1
+    %12 = torch.aten.convolution %6, %7, %arg8, %10, %8, %9, %false, %11, %int1 : !torch.vtensor<[1,1,7,7],!torch.quint8>, !torch.vtensor<[1,1,1,1],!torch.quint8>, !torch.vtensor<[7],si32>, !torch.list<int>, !torch.list<int>, !torch.list<int>, !torch.bool, !torch.list<int>, !torch.int -> !torch.vtensor<[1,1,7,7],!torch.qint32>
+          ^
+within split at ./issue450/test_qlinearconv_bias_1.mlir.decomposed.mlir:1 offset :19:11: note: see current operation: 
+%22 = "linalg.generic"(%4, %21) <{indexing_maps = [affine_map<(d0, d1, d2, d3) -> (d1)>, affine_map<(d0, d1, d2, d3) -> (d0, d1, d2, d3)>], iterator_types = [#linalg.iterator_type<parallel>, #linalg.iterator_type<parallel>, #linalg.iterator_type<parallel>, #linalg.iterator_type<parallel>], operandSegmentSizes = array<i32: 1, 1>}> ({
+^bb0(%arg26: i32, %arg27: i32):
+  "linalg.yield"(%arg26) : (i32) -> ()
+}) : (tensor<7xi32>, tensor<1x1x7x7xi32>) -> tensor<1x1x7x7xi32>

@@ -1,0 +1,8 @@
+within split at ./issue450/test_slice_default_steps_1.mlir.decomposed.mlir:1 offset :14:10: error: unimplemented: dim is not constant
+    %9 = torch.aten.slice.Tensor %arg0, %8, %4, %6, %int1 : !torch.vtensor<[20,10,5],f32>, !torch.int, !torch.int, !torch.int, !torch.int -> !torch.vtensor<[20,10,?],f32>
+         ^
+within split at ./issue450/test_slice_default_steps_1.mlir.decomposed.mlir:1 offset :14:10: note: see current operation: %45 = "torch.aten.slice.Tensor"(%arg0, %40, %20, %30, %6) : (!torch.vtensor<[20,10,5],f32>, !torch.int, !torch.int, !torch.int, !torch.int) -> !torch.vtensor<[20,10,?],f32>
+within split at ./issue450/test_slice_default_steps_1.mlir.decomposed.mlir:1 offset :14:10: error: failed to legalize operation 'torch.aten.slice.Tensor' that was explicitly marked illegal
+    %9 = torch.aten.slice.Tensor %arg0, %8, %4, %6, %int1 : !torch.vtensor<[20,10,5],f32>, !torch.int, !torch.int, !torch.int, !torch.int -> !torch.vtensor<[20,10,?],f32>
+         ^
+within split at ./issue450/test_slice_default_steps_1.mlir.decomposed.mlir:1 offset :14:10: note: see current operation: %37 = "torch.aten.slice.Tensor"(%arg0, %36, %18, %27, %5) : (!torch.vtensor<[20,10,5],f32>, !torch.int, !torch.int, !torch.int, !torch.int) -> !torch.vtensor<[20,10,?],f32>
