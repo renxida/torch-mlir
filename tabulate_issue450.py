@@ -79,21 +79,27 @@ def process_files():
             
             else:
                 results["success"] += 1
-    with open(f"{output_dir}/results_summary.txt", 'a') as results_file:
-        results_file.write(f"{file_name} processed successfully.\n")
-    with open(f"{output_dir}/final_results_summary.txt", 'w') as final_results_file:
-        final_results_file.write("Summary:\n")
-        final_results_file.write(f"Success: {results['success']}\n")
-        final_results_file.write(f"Failure: {results['failure']}\n")
-        final_results_file.write("Errors:\n")
-        for error, count in results["errors"].items():
-            final_results_file.write(f"{count} times: {error.strip()}\n")
-            testcases_with_error = results["testcases_with_error"][error]
-            testcases_with_error = "\n\t".join(testcases_with_error)
-            final_results_file.write(f"Testcases: \n\t{testcases_with_error}\n\n")
-        final_results_file.write(f"Total: {results['success'] + results['failure']}\n")
-        final_results_file.write(f"Percentage: {results['success'] / (results['success'] + results['failure']) * 100:.2f}%\n")
-        final_results_file.write("Done.\n")
+                print(f"{file_name} processed successfully.")
+    # summarize results
+    print("\n\nSummary:")
+    print(f"Success: {results['success']}")
+    print(f"Failure: {results['failure']}")
+    print("Errors:")
+    for error, count in results["errors"].items():
+        print(f"{count} times: {error.strip()}")
+
+        testcases_with_error = results["testcases_with_error"][error]
+        testcases_with_error = "\n\t".join(testcases_with_error)
+        print(f"Testcases: \n\t{testcases_with_error}")
+        print("\n")
+    print("\n\nSummary:")
+    print(f"Success: {results['success']}")
+    print(f"Failure: {results['failure']}")
+    print(f"Total: {results['success'] + results['failure']}")
+    print(f"Percentage: {results['success'] / (results['success'] + results['failure']) * 100:.2f}%")
+    print("Done.")
+
+
 def check_error(log_file_path, returncode):
     error_message = None
     with open(log_file_path, 'r') as log_file:
@@ -114,4 +120,3 @@ if __name__ == "__main__":
     # print number of files
     print(f"Number of files: {len(os.listdir('/tmp/issue450/'))}")
     process_files()
-
