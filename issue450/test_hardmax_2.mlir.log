@@ -1,4 +1,0 @@
-within split at ./issue450/test_hardmax_2.mlir.torch.mlir:1 offset :8:5: error: type of return operand 0 ('!torch.vtensor<[3,4,5],si64>') doesn't match function result type ('!torch.vtensor<[3,4,5],f32>') in function @test_hardmax
-    return %1 : !torch.vtensor<[3,4,5],f32>
-    ^
-within split at ./issue450/test_hardmax_2.mlir.torch.mlir:1 offset :8:5: note: see current operation: "func.return"(%11) : (!torch.vtensor<[3,4,5],si64>) -> ()

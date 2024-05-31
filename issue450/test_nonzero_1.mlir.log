@@ -1,4 +1,0 @@
-within split at ./issue450/test_nonzero_1.mlir.decomposed.mlir:1 offset :3:10: error: failed to legalize operation 'torch.aten.nonzero'
-    %0 = torch.aten.nonzero %arg0 : !torch.vtensor<[3,4,5],f32> -> !torch.vtensor<[3,4,5],si64>
-         ^
-within split at ./issue450/test_nonzero_1.mlir.decomposed.mlir:1 offset :3:10: note: see current operation: %1 = "torch.aten.nonzero"(%0) : (!torch.vtensor<[3,4,5],f32>) -> !torch.vtensor<[3,4,5],si64>

@@ -1,4 +1,0 @@
-within split at ./issue450/test_einsum_batch_diagonal_1.mlir.torch.mlir:1 offset :6:10: error: 'torch.aten.permute' op expected input and output tensors to have same rank, but 3 != 2.
-    %1 = torch.aten.einsum %str, %0, %none : !torch.str, !torch.list<vtensor>, !torch.none -> !torch.vtensor<[3,5],f64>
-         ^
-within split at ./issue450/test_einsum_batch_diagonal_1.mlir.torch.mlir:1 offset :6:10: note: see current operation: %3 = "torch.aten.permute"(%arg0, %2) : (!torch.vtensor<[3,5,5],f64>, !torch.list<int>) -> !torch.vtensor<[3,5],f64>

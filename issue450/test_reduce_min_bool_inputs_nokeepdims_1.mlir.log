@@ -1,2 +1,0 @@
-<unknown>:0: error: failed to legalize operation 'torch.constant.bool'
-<unknown>:0: note: see current operation: %3 = "torch.constant.bool"() <{value = false}> : () -> !torch.bool

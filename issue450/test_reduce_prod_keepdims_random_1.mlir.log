@@ -1,4 +1,0 @@
-within split at ./issue450/test_reduce_prod_keepdims_random_1.mlir.decomposed.mlir:1 offset :12:10: error: failed to legalize operation 'torch.aten.prod.dim_int' that was explicitly marked illegal
-    %5 = torch.aten.prod.dim_int %arg0, %4, %true, %none : !torch.vtensor<[3,2,2],f32>, !torch.int, !torch.bool, !torch.none -> !torch.vtensor<[3,1,2],f32>
-         ^
-within split at ./issue450/test_reduce_prod_keepdims_random_1.mlir.decomposed.mlir:1 offset :12:10: note: see current operation: %9 = "torch.aten.prod.dim_int"(%arg0, %8, %2, %1) : (!torch.vtensor<[3,2,2],f32>, !torch.int, !torch.bool, !torch.none) -> !torch.vtensor<[3,1,2],f32>

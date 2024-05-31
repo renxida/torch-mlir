@@ -1,4 +1,0 @@
-within split at ./issue450/test_reduce_sum_negative_axes_keepdims_example_1.mlir.decomposed.mlir:1 offset :7:10: error: failed to legalize operation 'torch.aten.sum.dim_IntList' that was explicitly marked illegal
-    %2 = torch.aten.sum.dim_IntList %arg0, %1, %true, %none : !torch.vtensor<[3,2,2],f32>, !torch.list<int>, !torch.bool, !torch.none -> !torch.vtensor<[3,1,2],f32>
-         ^
-within split at ./issue450/test_reduce_sum_negative_axes_keepdims_example_1.mlir.decomposed.mlir:1 offset :7:10: note: see current operation: %4 = "torch.aten.sum.dim_IntList"(%arg0, %3, %1, %0) : (!torch.vtensor<[3,2,2],f32>, !torch.list<int>, !torch.bool, !torch.none) -> !torch.vtensor<[3,1,2],f32>

@@ -1,4 +1,0 @@
-within split at ./issue450/test_training_dropout_zero_ratio_1.mlir.decomposed.mlir:1 offset :7:10: error: failed to legalize operation 'torch.aten.dropout' that was explicitly marked illegal
-    %3 = torch.aten.dropout %arg0, %0, %2 : !torch.vtensor<[3,4,5],f32>, !torch.float, !torch.bool -> !torch.vtensor<[3,4,5],f32>
-         ^
-within split at ./issue450/test_training_dropout_zero_ratio_1.mlir.decomposed.mlir:1 offset :7:10: note: see current operation: %8 = "torch.aten.dropout"(%arg0, %4, %7) : (!torch.vtensor<[3,4,5],f32>, !torch.float, !torch.bool) -> !torch.vtensor<[3,4,5],f32>

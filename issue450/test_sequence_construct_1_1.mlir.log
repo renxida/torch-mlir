@@ -1,4 +1,0 @@
-within split at ./issue450/test_sequence_construct_1_1.mlir.decomposed.mlir:1 offset :3:10: error: failed to legalize operation 'torch.prim.ListConstruct'
-    %0 = torch.prim.ListConstruct %arg0 : (!torch.vtensor<[2,3,4],f32>) -> !torch.list<vtensor<[2,3,4],f32>>
-         ^
-within split at ./issue450/test_sequence_construct_1_1.mlir.decomposed.mlir:1 offset :3:10: note: see current operation: %1 = "torch.prim.ListConstruct"(%0) : (!torch.vtensor<[2,3,4],f32>) -> !torch.list<vtensor<[2,3,4],f32>>
