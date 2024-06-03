@@ -21,7 +21,12 @@ LINALG_XFAIL_SET = COMMON_TORCH_MLIR_LOWERING_XFAILS | {
     "Conv2dWithPaddingDilationStrideStaticModule_depthwise_multiplier",
     "IscloseStaticModule_basic",
     "IscloseStaticModuleTrue_basic",
-    "SplitWithSizes_Module_basic",
+    # lowering to torch backend IR fails due to unsupported op: aten.upsample_[mode/dims].vec
+    # these interpolate tests are added specifically to test onnx.Resize.
+    "InterpolateDynamicModule_sizes_bilinear",
+    "InterpolateDynamicModule_sizes_nearest",
+    "InterpolateStaticModule_scales_bilinear_align_corners",
+    "InterpolateDynamicModule_scales_recompute_bilinear",
 }
 
 LINALG_CRASHING_SET = {
@@ -272,6 +277,7 @@ TORCHDYNAMO_XFAIL_SET = {
     "QuantizedReluInt8_basic",
     "QuantizedReluUint8_basic",
     "Conv2dQInt8Module_basic",
+    "Conv2dQInt8Module_grouped",
     "ConvTranspose2DQInt8_basic",
     # Dynamo not supporting conv_tbc
     "ConvTbcModule_basic",
@@ -368,6 +374,7 @@ FX_IMPORTER_XFAIL_SET = {
     "ContainsIntList_False",
     "ContainsIntList_True",
     "Conv2dQInt8Module_basic",
+    "Conv2dQInt8Module_grouped",
     "Conv2dWithPaddingDilationStrideStaticModule_depthwise_multiplier",
     "ConvTbcModule_basic",
     "ConvTranspose2DQInt8_basic",
@@ -382,6 +389,10 @@ FX_IMPORTER_XFAIL_SET = {
     "ElementwiseDequantizePerTensorModule_basic",
     "ElementwiseQuantizePerTensorModule_basic",
     "ElementwiseQuantizePerTensorUIntModule_basic",
+    "ElementwiseRreluEvalModule_basic",
+    "ElementwiseRreluEvalStaticModule_basic",
+    "ElementwiseRreluTrainModule_basic",
+    "ElementwiseRreluTrainStaticModule_basic",
     "ElementwiseToDtypeI64ToUI8Module_basic",
     "EqIntModule_basic",
     "FakeQuantizePerTensorAffineDynamicShapeModule_basic",
@@ -534,6 +545,7 @@ FX_IMPORTER_STABLEHLO_XFAIL_SET = {
     "ContainsIntList_False",
     "ContainsIntList_True",
     "Conv2dQInt8Module_basic",
+    "Conv2dQInt8Module_grouped",
     "ConvTbcModule_basic",
     "ConvTranspose2DQInt8_basic",
     "ConvolutionBackwardModule2DPadded_basic",
@@ -811,6 +823,9 @@ FX_IMPORTER_STABLEHLO_CRASHING_SET = {
 }
 
 STABLEHLO_PASS_SET = {
+    "SplitWithSizes_Module_basic",
+    "TensorSplitSections_GetItemModule_basic",
+    "TensorSplitSections_ListUnpackModule_basic",
     "AtenLinear1D_basic",
     "AtenLinear2D_basic",
     "AtenLinear3DBias_basic",
@@ -903,6 +918,9 @@ STABLEHLO_PASS_SET = {
     "Convolution2DStaticModule_basic",
     "ConvolutionBackwardModule2DStatic_basic",
     "ConvolutionModule2DTransposeStridedStatic_basic",
+    "Conv_Transpose1dStaticModule_basic",
+    "Conv_Transpose2dStaticModule_basic",
+    "Conv_Transpose3dStaticModule_basic",
     "ConstantPad2dStaticModule_basic",
     "ConstantPadNdModule_basic",
     "ConstantPadNdPartialStaticModule_basic",
@@ -1003,12 +1021,15 @@ STABLEHLO_PASS_SET = {
     "ElementwiseRemainderTensorModule_Float_basic",
     "ElementwiseRemainderTensorModule_Int_Float_basic",
     "ElementwiseRemainderTensorModule_Int_basic",
+    "ElementwiseRreluEvalStaticModule_basic",
+    "ElementwiseRreluTrainStaticModule_basic",
     "ElementwiseRsqrtModule_basic",
     "ElementwiseSigmoidModule_basic",
     "ElementwiseSinModule_basic",
     "ElementwiseSqrtModule_basic",
     "ElementwiseTanIntModule_basic",
     "ElementwiseTanModule_basic",
+    "ElementwiseTernaryStaticShapeModule_basic",
     "ElementwiseToDtypeF32ToI64Module_basic",
     "ElementwiseToDtypeI64ToI8Module_basic",
     "ElementwiseToDtypeIdentityModule_basic",
@@ -1450,6 +1471,8 @@ STABLEHLO_CRASHING_SET = set()
 # Write the TOSA set as a "passing" set as it is very early in development
 # and very few tests work yet.
 TOSA_PASS_SET = {
+    "TensorSplitSections_GetItemModule_basic",
+    "TensorSplitSections_ListUnpackModule_basic",
     "AtenLinear2D_basic",
     "AtenLinear3DBias_basic",
     "ElementwiseAddScalar_NumToTensorFloat_Module_basic",
@@ -1462,6 +1485,7 @@ TOSA_PASS_SET = {
     "AtenDotModule_basic",
     "ElementwiseFloatTensorGtIntScalarModule_basic",
     "ElementwiseLogSigmoidModule_basic",
+    "ElementwiseTernaryStaticShapeModule_basic",
     "ElementwiseTruncModule_basic",
     "ElementwiseTruncIntModule_basic",
     "ElementwiseSgnModule_basic",
@@ -1677,6 +1701,8 @@ TOSA_PASS_SET = {
     "ElementwiseRemainderScalarModule_Int_Float_basic",
     "ElementwiseRemainderScalarModule_Int_basic",
     "ElementwiseRemainderScalarModule_Int_basic",
+    "ElementwiseRreluEvalModule_basic",
+    "ElementwiseRreluEvalStaticModule_basic",
     "ElementwiseRsqrtModule_basic",
     "ElementwiseSeluModule_basic",
     "ElementwiseSigmoidModule_basic",
@@ -1963,6 +1989,9 @@ MAKE_FX_TOSA_PASS_SET = (
     "ElementwisePreluModule_basic",
     "ElementwisePreluStaticModule_basic",
     "ElementwiseLogSigmoidModule_basic",
+    # failed to legalize operation 'torch.aten.rrelu_with_noise'
+    "ElementwiseRreluEvalModule_basic",
+    "ElementwiseRreluEvalStaticModule_basic",
     # Shape Related failures
     "PrimListUnpackNumMismatchModule_basic",
     "ReshapeExpandModule_basic",
@@ -2121,6 +2150,7 @@ LTC_XFAIL_SET = {
     "ElementwiseBitwiseAndScalarInt32Module_basic",
     "ElementwiseBitwiseAndScalarInt8Module_basic",
     "Conv2dQInt8Module_basic",
+    "Conv2dQInt8Module_grouped",
     "ConvTranspose2DQInt8_basic",
 }
 
@@ -2272,6 +2302,7 @@ ONNX_XFAIL_SET = {
     "Conv2dModule_basic",
     "Conv2dNoPaddingModule_basic",
     "Conv2dQInt8Module_basic",
+    "Conv2dQInt8Module_grouped",
     "Conv2dWithPaddingDilationStrideModule_basic",
     "Conv2dWithPaddingModule_basic",
     "Conv3dModule_basic",
@@ -2588,6 +2619,10 @@ ONNX_XFAIL_SET = {
     "_ConvolutionDeprecated2DDeterministicModule_basic",
     "_SoftmaxModule_basic",
     # Failure - onnx_import
+    # Failure - onnx_lowering: onnx.SplitToSequence
+    "ChunkListUnpackUneven_Module_basic",
+    "TensorSplitSections_GetItemModule_basic",
+    "TensorSplitSections_ListUnpackModule_basic",
     # Failure - onnx_lowering: onnx.AveragePool
     "AdaptiveAvgPool1dGeneralDynamicNoBatches_basic",
     # these diagonal modules are currently failing due to dynamic shape.
@@ -2648,6 +2683,8 @@ ONNX_XFAIL_SET = {
     "PrimsIotaModule_basic",
     # Failure - unknown
     "BernoulliModule_basic",
+    "Conv_Transpose1dModule_basic",
+    "Conv_Transpose3dModule_basic",
     "Conv2dWithPaddingDilationStrideStaticModule_depthwise_multiplier",
     "CopyWithDifferentDTypesAndSizesModule_basic",
     "CopyWithDifferentDTypesModule_basic",
@@ -2819,6 +2856,7 @@ FX_IMPORTER_TOSA_XFAIL_SET = {
     "ContainsIntList_True",
     "Conv1dModule_basic",
     "Conv2dQInt8Module_basic",
+    "Conv2dQInt8Module_grouped",
     "Conv2dWithPaddingDilationStrideStaticModule_grouped",
     "Conv2dWithPaddingDilationStrideStaticModule_grouped_multiplier",
     "Conv3dModule_basic",
@@ -3089,6 +3127,10 @@ FX_IMPORTER_TOSA_XFAIL_SET = {
     "IndexTensorSelectDimModule_basic",
     "IndexTensorStaticContiguousWithNoneModule_basic",
     "IndexTensorStaticNonContiguousWithNoneModule_basic",
+    "InterpolateDynamicModule_sizes_bilinear",
+    "InterpolateDynamicModule_sizes_nearest",
+    "InterpolateStaticModule_scales_bilinear_align_corners",
+    "InterpolateDynamicModule_scales_recompute_bilinear",
     "IntFloatModule_basic",
     "IntImplicitModule_basic",
     "IsFloatingPointFloat_True",
@@ -3601,6 +3643,7 @@ ONNX_TOSA_XFAIL_SET = {
     "Conv2dModule_basic",
     "Conv2dNoPaddingModule_basic",
     "Conv2dQInt8Module_basic",
+    "Conv2dQInt8Module_grouped",
     "Conv2dWithPaddingDilationStrideModule_basic",
     "Conv2dWithPaddingDilationStrideStaticModule_grouped",
     "Conv2dWithPaddingDilationStrideStaticModule_grouped_multiplier",
@@ -3933,6 +3976,10 @@ ONNX_TOSA_XFAIL_SET = {
     "IndexTensorStaticContiguousWithNoneModule_basic",
     "IndexTensorStaticModule_basic",
     "IndexTensorStaticNonContiguousWithNoneModule_basic",
+    "InterpolateDynamicModule_sizes_bilinear",
+    "InterpolateDynamicModule_sizes_nearest",
+    "InterpolateStaticModule_scales_bilinear_align_corners",
+    "InterpolateDynamicModule_scales_recompute_bilinear",
     "IntFloatModule_basic",
     "IntImplicitModule_basic",
     "IouOfModule_basic",
